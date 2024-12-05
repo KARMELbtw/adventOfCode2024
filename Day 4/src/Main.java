@@ -113,6 +113,15 @@ public class Main {
                     }
                 }
             }
+            //part 2
+            for (int y = 0; y < input.size()-2; y++) {
+                for (int x = 0; x < input.get(y).size()-2; x++) {
+                    if (input.get(y).get(x) == 'M' && input.get(y+1).get(x+1) == 'A' && input.get(y).get(x+2) == 'S' && input.get(y+2).get(x) == 'M' && input.get(y+2).get(x+2) == 'S') secondAnswer++;
+                    if (input.get(y).get(x) == 'M' && input.get(y+1).get(x+1) == 'A' && input.get(y).get(x+2) == 'M' && input.get(y+2).get(x) == 'S' && input.get(y+2).get(x+2) == 'S') secondAnswer++;
+                    if (input.get(y).get(x) == 'S' && input.get(y+1).get(x+1) == 'A' && input.get(y).get(x+2) == 'S' && input.get(y+2).get(x) == 'M' && input.get(y+2).get(x+2) == 'M') secondAnswer++;
+                    if (input.get(y).get(x) == 'S' && input.get(y+1).get(x+1) == 'A' && input.get(y).get(x+2) == 'M' && input.get(y+2).get(x) == 'S' && input.get(y+2).get(x+2) == 'M') secondAnswer++;
+                }
+            }
             System.out.println("First answer: " + firstAnswer);
             System.out.println("Second answer: " + secondAnswer);
         } catch (FileNotFoundException e) {
