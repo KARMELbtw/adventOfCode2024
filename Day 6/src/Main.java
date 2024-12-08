@@ -25,8 +25,10 @@ public class Main {
                 y++;
             }
             Guard guard = new Guard(posX, posY, map);
-            guard.move(posX, posY);
+            guard.move();
+            guard.placeObstacles();
             System.out.println("First answer: " + guard.getDistinctPositions());
+            System.out.println("Second answer: " + guard.getObstaclePositions());
         } catch (FileNotFoundException e) {
             System.out.println("No file found");
         }
