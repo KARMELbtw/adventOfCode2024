@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Main {
@@ -30,6 +31,7 @@ public class Main {
                 if (previous != c && !visited[i][j]) {
                     int[] val = countPlots(i, j, c);
                     prices.put(c, prices.getOrDefault(c, 0) + val[0]*val[1]);
+                    System.out.println(c + " - " + val[0] + ", " + val[2]);
                     pricesBulk.put(c, pricesBulk.getOrDefault(c, 0) + val[0]*val[2]);
                 }
                 previous = map.get(i).get(j);
@@ -51,7 +53,7 @@ public class Main {
     }
 
     static int[] countPlots(int x, int y, char c) {
-        int[] arr = {0, 0, 0}; //0 - area 1 - perimeter 2 - edges
+        int[] arr = {0, 0, 0}; // 0 - area, 1 - perimeter, 2 - sides
         int[][] dirs = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
         visited[x][y] = true;
 
@@ -61,7 +63,6 @@ public class Main {
             int newX = x + d[0];
             int newY = y + d[1];
 
-            // Check if within bounds
             if (newX >= 0 && newX < map.size() && newY >= 0 && newY < map.size()) {
                 if (!visited[newX][newY] && map.get(newX).get(newY) == c) {
                     int[] temp = countPlots(newX, newY, c);
@@ -75,6 +76,31 @@ public class Main {
                 arr[1]++;
             }
         }
+
+        if (x - 1 < 0 && y - 1 < 0) arr[2]++;
+        if (x + 1 >= map.size() && y - 1 < 0) arr[2]++;
+        if (x + 1 >= map.size() && y + 1 >= map.size()) arr[2]++;
+        if (x - 1 < 0 && y + 1 >= map.size()) arr[2]++;
+
+        if (y - 1 >= 0 && x + 1 < map.size() && map.get(x).get(y - 1) != c && map.get(x + 1).get(y) != c) arr[2]++;
+        if (x - 1 >= 0 && y - 1 >= 0 && map.get(x - 1).get(y) != c && map.get(x).get(y - 1) != c) arr[2]++;
+        if (x - 1 >= 0 && y + 1 < map.size() && map.get(x - 1).get(y) != c && map.get(x).get(y + 1) != c) arr[2]++;
+        if (x + 1 < map.size() && y + 1 < map.size() && map.get(x + 1).get(y) != c && map.get(x).get(y + 1) != c) arr[2]++;
+
+        if (x + 1 < map.size() && y + 1 < map.size() && map.get(x + 1).get(y + 1) != c && map.get(x + 1).get(y) == c && map.get(x).get(y + 1) == c) arr[2]++;
+        if (x - 1 >= 0 && y + 1 < map.size() && map.get(x - 1).get(y + 1) != c && map.get(x - 1).get(y) == c && map.get(x).get(y + 1) == c) arr[2]++;
+        if (x + 1 < map.size() && y - 1 >= 0 && map.get(x + 1).get(y - 1) != c && map.get(x + 1).get(y) == c && map.get(x).get(y - 1) == c) arr[2]++;
+        if (x - 1 >= 0 && y - 1 >= 0 && map.get(x - 1).get(y - 1) != c && map.get(x - 1).get(y) == c && map.get(x).get(y - 1) == c) arr[2]++;
+
+        if (x + 1 == map.size() && y + 1 < map.size() && map.get(x).get(y + 1) != c) arr[2]++;
+        if (x + 1 == map.size() && y - 1 >= 0 && map.get(x).get(y - 1) != c) arr[2]++;
+        if (x - 1 < 0 && y + 1 < map.size() && map.get(x).get(y + 1) != c) arr[2]++;
+        if (x - 1 < 0 && y - 1 >= 0 && map.get(x).get(y - 1) != c) arr[2]++;
+
+        if (y + 1 == map.size() && x + 1 < map.size() && map.get(x + 1).get(y) != c) arr[2]++;
+        if (y + 1 == map.size() && x - 1 >= 0 && map.get(x - 1).get(y) != c) arr[2]++;
+        if (y - 1 < 0 && x + 1 < map.size() && map.get(x + 1).get(y) != c) arr[2]++;
+        if (y - 1 < 0 && x - 1 >= 0 && map.get(x - 1).get(y) != c) arr[2]++;
 
         return arr;
     }
