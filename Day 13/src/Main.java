@@ -35,10 +35,10 @@ public class Main {
         long secondAnswer = 0;
         for (int i = 0; i < machines.size(); i++) {
             firstAnswer += machines.get(i).GetMinAmountOfTokens();
-//            secondAnswer += machines.get(i).GetMinAmountOfTokensPart2();
+            secondAnswer += machines.get(i).GetMinAmountOfTokensPart2().longValue();
         }
         System.out.println("First Answer: " + firstAnswer);
-//        System.out.println("Second Answer: " + secondAnswer);
+        System.out.println("Second Answer: " + secondAnswer);
         sc.close();
     }
 }

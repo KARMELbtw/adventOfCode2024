@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class ClawMachine {
     public int aX = -1;
     public int aY = -1;
@@ -24,9 +27,27 @@ public class ClawMachine {
         return min;
     }
 
-//    public long GetMinAmountOfTokensPart2() {
-//        long posX = prizeX+10000000000000L;
-//        long posY = prizeY+10000000000000L;
-//
-//    }
+    public BigDecimal GetMinAmountOfTokensPart2() {
+        BigDecimal adjustment = new BigDecimal("10000000000000");
+
+        BigDecimal newPrizeX = BigDecimal.valueOf(prizeX).add(adjustment);
+        BigDecimal newPrizeY = BigDecimal.valueOf(prizeY).add(adjustment);
+        BigDecimal newaX = BigDecimal.valueOf(aX);
+        BigDecimal newaY = BigDecimal.valueOf(aY);
+        BigDecimal newbX = BigDecimal.valueOf(bX);
+        BigDecimal newbY = BigDecimal.valueOf(bY);
+
+        BigDecimal numeratorApress = newPrizeX.multiply(newbY).subtract(newPrizeY.multiply(newbX));
+        BigDecimal denominatorApress = newaX.multiply(newbY).subtract(newaY.multiply(newbX));
+
+        if (numeratorApress.divideAndRemainder(denominatorApress)[1].equals(BigDecimal.ZERO)) {
+
+            BigDecimal apress = numeratorApress.divide(denominatorApress, RoundingMode.HALF_UP);
+            BigDecimal numeratorBpress = newPrizeX.subtract(newaX.multiply(apress));
+            BigDecimal bpress = numeratorBpress.divide(newbX, BigDecimal.ROUND_HALF_UP);
+            return apress.multiply(new BigDecimal("3")).add(bpress);
+
+        }
+        return BigDecimal.ZERO;
+    }
 }
