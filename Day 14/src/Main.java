@@ -50,6 +50,22 @@ public class Main {
 
         System.out.println("First Answer: " + firstAnswer);
 
+        for (int i = 0; i < 10000; i++) {
+            boolean tree = true;
+            for (Robot robot : robots) {
+                robot.Move();
+            }
+            for (int j = 0; j < GridY; j++) {
+                for (int k = 0; k < GridX; k++) {
+                    if (Grid[j][k] > 1) tree = false;
+                }
+            }
+            if (tree) {
+                System.out.println("Second Answer: " + (i+101));
+                break;
+            }
+        }
+
         sc.close();
     }
 }
