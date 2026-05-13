@@ -6,8 +6,11 @@ import java.util.Scanner;
 
 public class Main {
     static Map<String, Character> map = new HashMap<>();
+    static Map<String, Character> map2 = new HashMap<>();
     static int posX = -1;
     static int posY = -1;
+    static int posX2 = -1;
+    static int posY2 = -1;
 
     static int canMoveLeft(int x, int y, int count) {
         if (map.containsKey(x-1 + "," + y) && map.get(x-1 + "," + y).equals('.')) {
@@ -116,8 +119,32 @@ public class Main {
                     if(line.charAt(j) == '@') {
                         posX = j;
                         posY = i;
+
+                        map2.put(j + "," + i, line.charAt(j));
+                        map2.put((j+1) + "," +i, '.');
+                        posX2 = j;
+                        posY2 = i;
+                    } else {
+                        map2.put(j + "," + i, line.charAt(j));
+                        map2.put((j+1) + "," + i, line.charAt(j));
                     }
                     map.put(j + "," + i, line.charAt(j));
+                }
+                int n = 0;
+                for(char c : line.toCharArray()) {
+                    if(c == '@') {
+                        map2.put(n + "," + i, c);
+                        map2.put((n+1) + "," +i, '.');
+                        posX2 = n;
+                        posY2 = i;
+                    } else if (c == 'O') {
+                        map2.put(n + "," + i, '[');
+                        map2.put((n+1) + "," + i, ']');
+                    } else {
+                        map2.put(n + "," + i, c);
+                        map2.put((n+1) + "," + i, c);
+                    }
+                    n+=2;
                 }
             } else {
                 moves += line;
@@ -143,12 +170,12 @@ public class Main {
                 default:
                     break;
             }
-//            for (int j = 0; j < 8; j++) {
-//                for (int k = 0; k < 8; k++) {
-//                    System.out.print(map.get(k+","+j));
-//                }
-//                System.out.println();
-//            }
+            for (int j = 0; j < 8; j++) {
+                for (int k = 0; k < 16; k++) {
+                    System.out.print(map2.get(k+","+j));
+                }
+                System.out.println();
+            }
         }
 
         int firstAnswer = 0;
@@ -160,7 +187,10 @@ public class Main {
             }
         }
 
+        int secondAnswer = 0;
+
         System.out.println("First Answer: " + firstAnswer);
+        System.out.println("Second Answer: " + secondAnswer);
 
         sc.close();
     }
